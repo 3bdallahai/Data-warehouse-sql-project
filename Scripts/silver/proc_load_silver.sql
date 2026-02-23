@@ -6,7 +6,7 @@ Script Purpose:
 -   This script load the data from bronze layer to the silver layer tables 
 	removing any data from the table before loading.
 
--   The script preforms data cleaning for each table 
+-   The script preforms data cleansing for each table 
 ===========================================================================================
 */
 exec silver.load_silver
@@ -24,7 +24,7 @@ BEGIN
 		PRINT '------------------------------------------------------------------';
 		PRINT 'Loading CRM Tables'
 		PRINT '------------------------------------------------------------------';
-		
+
 		SET @start_time = GETDATE();
 		PRINT 'Truncationg table: silver.crm_cust_info '
 		TRUNCATE TABLE silver.crm_cust_info
@@ -78,8 +78,8 @@ BEGIN
 		)
 		SELECT 
 		prd_id ,
-		REPLACE(SUBSTRING(prd_key,1,5), '-','_') AS cat_key,
 		SUBSTRING(prd_key, 7, LEN(prd_key)) AS prd_key,
+		REPLACE(SUBSTRING(prd_key,1,5), '-','_') AS cat_key,
 		prd_nm,
 		ISNULL(prd_cost,0) ,
 		CASE UPPER(TRIM(prd_line))
